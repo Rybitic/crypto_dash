@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>404 Couldn't Find - Supr</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Supr Trading Platform. It's developed for buy-sell, exchange, market activities etc. Fully responsive, creative and clean design." />
+    <meta name="keywords" content="crypto Exchange, crypto theme, cryptocurrency dashboard, crypto website, cryptocurrency" />
+    <meta content="Oguzhan Atalay" name="author" />
+    <!-- favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='images/favicon/apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='images/favicon/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='images/favicon/favicon-16x16.png') }}">
+    <link rel="manifest" href="{{ url_for('static', filename='images/favicon/site.webmanifest') }}">
+    <link rel="mask-icon" href="{{ url_for('static', filename='images/favicon/safari-pinned-tab.svg') }}" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#000000">
+    <!-- Bootstrap css -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
+    <!-- Icons -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/fontawesome/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/icons.css') }}">
+    <!-- Main css File -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.min.css') }}">
+    <!-- Other css Files -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/sweetalert.css') }}">
+</head>
+<body class="crypt-dark">
+    <header>
+        <div class="crypt-header">
+            <div class="container-fluid crypt-container">
+                <div class="row">
+                    <div class="col-xl-1 col-lg-1 col-md-1 col-sm-12">
+                        <div class="row">
+                            <div class="crypt-logo">
+                                <a href="/"><img src="{{ url_for('static', filename='images/logo.png') }}" alt="Supr Trading Platform by Oguzhan Atalay" style="height: 45px;top: 5px;"></a>
+                            </div>
+                        </div>
+                    </div>
+                <i class="menu-toggle fas fa-bars d-xs-block d-sm-block d-md-none"></i>
+            </div>
+        </div>
+    </div>
+</header>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-12 col-md-8">
+                <div class="text-center pt-5 pb-5">
+                    <h1 class="error-bigt">Opps!</h1>
+                    <h3 class="pb-3 pt-5">We can't seem to find the page you're looking for.<br>Sorry about that!</h3>
+                    <img src="{{ url_for('static', filename='images/404.png') }}" style="width: 80%">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Jquery Scripts -->
+    <script src="js/jquery.js"></script>
+    <script src="js/tilt.jquery.min.js"></script>
+    <!-- Bootsrap Scripts -->
+    <script src="js/popper.min.js"></script>
+    <script src="bootstrap/js/bootstrap.bundle.js"></script>
+    <script src="bootstrap/js/bootstrap.js"></script>
+    <script src="js/sweetalert.js"></script>
+    <!-- Main Scripts -->
+    <script src="js/main.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Bitcoin Price Ticker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #181818;
+            color: #fff;
+            margin: 0;
+            padding: 20px;
+        }
+        .ticker {
+            display: flex;
+            justify-content: space-between;
+            background-color: #222;
+            padding: 10px 20px;
+            border-radius: 8px;
+            align-items: center;
+        }
+        .ticker .price {
+            font-size: 2rem;
+            color: #e74c3c;
+        }
+        .ticker .percentage {
+            font-size: 1rem;
+        }
+        .percentage.positive {
+            color: #2ecc71;
+        }
+        .percentage.negative {
+            color: #e74c3c;
+        }
+        .ticker .high-low {
+            font-size: 0.9rem;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <div class="ticker">
+        <div class="symbol">BTC/USDT</div>
+        <div class="price" id="price">Loading...</div>
+        <div class="percentage" id="change">Loading...</div>
+        <div class="high-low">
+            <div>24H HIGH: <span id="high">Loading...</span></div>
+            <div>24H LOW: <span id="low">Loading...</span></div>
+        </div>
+    </div>
+
+    <script>
+        async function fetchBinanceData() {
+            try {
+                const response = await fetch('https://api.binance.com/api/v3/ticker/24hr?symbol=PEPEUSDT');
+                const data = await response.json();
+
+                // Extract relevant data
+                const price = parseFloat(data.lastPrice)
+                const change = parseFloat(data.priceChangePercent).toFixed(2);
+                const high = parseFloat(data.highPrice).toFixed(2);
+                const low = parseFloat(data.lowPrice).toFixed(2);
+
+                // Update the HTML
+                document.getElementById('price').innerText = price;
+                document.getElementById('change').innerText = (change > 0 ? "+" : "") + change + "%";
+                document.getElementById('change').className = `percentage ${change > 0 ? "positive" : "negative"}`;
+                document.getElementById('high').innerText = high;
+                document.getElementById('low').innerText = low;
+            } catch (error) {
+                console.error('Error fetching Binance data:', error);
+            }
+        }
+
+        // Fetch every 2 seconds
+        setInterval(fetchBinanceData, 3000);
+
+        // Initial fetch
+        fetchBinanceData();
+    </script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Supr</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Supr Trading Platform. It's developed for buy-sell, exchange, market activities etc. Fully responsive, creative and clean design." />
+    <meta name="keywords" content="crypto Exchange, crypto theme, cryptocurrency dashboard, crypto website, cryptocurrency" />
+    <meta content="Oguzhan Atalay" name="author" />
+    <!-- favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='images/favicon/apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='images/favicon/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='images/favicon/favicon-16x16.png') }}">
+    <link rel="manifest" href="{{ url_for('static', filename='images/favicon/site.webmanifest') }}">
+    <link rel="mask-icon" href="{{ url_for('static', filename='images/favicon/safari-pinned-tab.svg') }}" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#000000">
+    <!-- Bootstrap css -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
+    <!-- Icons -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/fontawesome/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/icons.css') }}">
+    <!-- Main css File -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.min.css') }}">
+    <!-- Other css Files -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/sweetalert.css') }}">
+</head>
+<body class="crypt-dark">
+    <header>
+        <div class="crypt-header">
+            <div class="container-fluid crypt-container">
+                <div class="row">
+                    <div class="col-xl-1 col-lg-1 col-md-1 col-sm-12">
+                        <div class="row">
+                            <div class="crypt-logo">
+                                <a href="{{ url_for('index') }}">
+                                    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Supr Trading Platform by Oguzhan Atalay" style="height: 70px;">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <i class="menu-toggle fas fa-bars d-xs-block d-sm-block d-md-none"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="container pb-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8">
+                <div class="text-center pt-5 pb-5">
+                    <h3 class="p-5">Welcome to Supr</h3>
+                    <div class="crypt-form shadow-lg rounded p-5 mt-3">
+                        <div class="crypt-form-top text-center">
+                            <div>
+                                <h5>Log in</h5>
+                                <div class="info-text"><p>Please check that you are visiting the correct URL</p></div>
+                                <div class="safeURL"><img src="{{ url_for('static', filename='images/lock.svg') }}" alt="Safe URL"><span>https:</span><span>//auth.rybitic.com</span></div>
+                            </div>
+                        </div>
+                        <!-- Update form action -->
+                        <form action="{{ url_for('login') }}" method="post">
+                            <div class="form-group">
+                                <label class="form-label" for="login1-email" style="color: white">AccountID</label>
+                                <input type="text" class="form-control" name="username" id="login1-email" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="login1-password" style="color: white">Password</label>
+                                <input type="password" class="form-control" name="password" id="login1-password" required>
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-lg btn-green btn-block mt-2">Sign in</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
