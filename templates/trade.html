@@ -73,26 +73,6 @@
     <script src="https://s3.tradingview.com/tv.js"></script>
 </head>
 <body class="crypt-dark cryptrade1">
-    <header>
-        <div class="crypt-header">
-            <div class="container-fluid crypt-container">
-                <div class="row" style="text-align: center">
-                    <div class="col-xl col-lg col-md col-sm">
-                        <div class="row">
-                            <div class="crypt-logo">
-                                <a href="/"><img src="{{ url_for('static', filename='images/logo.png') }}" alt="Supr Trading Platform" style="height: 70px"></a>
-                            </div>
-                            <div class="mobile-menu col-xl-11 col-lg-11 col-md-11 d-none d-md-block d-lg-block">
-                    <ul class="crypt-heading-menu float-left">
-
-                    </ul>
-                </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
     <div class="container-fluid crypt-container">
         <div class="row sm-gutters">
             <div class="col-md-12 mt-2">
@@ -160,8 +140,10 @@
     <div class="wallet-info">
                 <h3>Wallet & Balances</h3>
                 <div class="wallet-details">
-                    <p><strong>Total Balance:</strong> ${{ balance_usdt }}</p>
-                    <p><strong>PNL:</strong> {{ (balance_usdt - 100) | round(2) }}</p>
+                    <p style="font-size: 20px"><strong>Total Balance:</strong> ${{ balance_usdt }}</p>
+                    <p style="font-size: 20px"><strong>USDT:</strong> {{ amount_usdt | round(2) }}</p>
+                    <p style="font-size: 20px"><strong>PEPE:</strong> {{ amount_pepe | round(2) }}</p>
+                    <p style="font-size: 20px"><strong>PNL:</strong> {{ (balance_usdt - 100) | round(2) }}</p>
                 </div>
             </div>
     <br>

@@ -282,14 +282,16 @@ def login():
 @login_required
 def index():
     balance_usdt = user.find_one({"username": "test"})["balance"]["usdt"]
+    amount_usdt = balance_usdt
     balance_pepe = user.find_one({"username": "test"})["balance"]["pepe"]
-    value_pepe = balance_pepe * get_market_price("PEPEUSDT")
+    value_pepe = abs(balance_pepe) * get_market_price("PEPEUSDT")
     balance_usdt += value_pepe
     balance_usdt = round(balance_usdt, 2)
     open_orders = list(orders.find({"status": "open"}))
     closed_orders = list(orders.find({"status": "executed"}))
 
-    return render_template('trade.html', balance_usdt=balance_usdt, balance_pepe=balance_pepe, open_orders=open_orders, closed_orders=closed_orders)
+    return render_template('trade.html', balance_usdt=balance_usdt, balance_pepe=balance_pepe, open_orders=open_orders, closed_orders=closed_orders,
+                           amount_usdt=amount_usdt, amount_pepe=balance_pepe)
 
 @app.route('/logout')
 @login_required
