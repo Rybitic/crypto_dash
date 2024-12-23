@@ -1,11 +1,6 @@
-from logging import lastResort
-
 from flask import Flask, render_template, request, redirect, session, url_for,jsonify
 from functools import wraps
 from datetime import timedelta, datetime, timezone
-
-from pandas.io.clipboard import lazy_load_stub_paste
-from pycares.errno import value
 from pymongo import MongoClient
 from bson import ObjectId
 import requests
@@ -287,12 +282,21 @@ def index():
     balance_usdt = user.find_one({"username": "test"})["balance"]["usdt"]
     amount_usdt = balance_usdt
     balance_pepe = user.find_one({"username": "test"})["balance"]["pepe"]
-    value_pepe = abs(balance_pepe) * get_market_price("PEPEUSDT")
-    balance_usdt += value_pepe
-    balance_usdt = round(balance_usdt, 2)
-    open_orders = list(orders.find({"status": "open"}))
     closed_orders = list(orders.find({"status": "executed"}))
     number_of_closed_orders = len(closed_orders)
+    pnl = 0
+    balance_usdt += get_market_price("PEPEUSDT") * abs(balance_pepe)
+    if not number_of_closed_orders % 2 == 0:
+        last_order = closed_orders[-1]
+        closed_orders = closed_orders[:-1]
+
+        if last_order['pos'] == "long":
+            pnl = (get_market_price("PEPEUSDT") - last_order['price']) * last_order['quantity']
+        elif last_order['pos'] == "short":
+            pnl = (last_order['price'] - get_market_price("PEPEUSDT")) * last_order['quantity']
+
+    balance_usdt = round(balance_usdt+pnl, 2)
+    open_orders = list(orders.find({"status": "open"}))
     if not number_of_closed_orders % 2 == 0:
         closed_orders = closed_orders[:-1]
 
@@ -304,9 +308,10 @@ def index():
         elif i['order_type'] == 'stop_limit':
             lose += 1
     winrate = win / (win + lose) * 100
+    closed_orders = list(orders.find({"status": "executed"}))
 
     return render_template('trade.html', balance_usdt=balance_usdt, balance_pepe=balance_pepe, open_orders=open_orders, closed_orders=closed_orders,
-                           amount_usdt=amount_usdt, amount_pepe=balance_pepe, winrate=winrate, win=win, lose=lose)
+                           amount_usdt=amount_usdt, amount_pepe=balance_pepe, winrate=winrate, win=win, lose=lose, pnl=pnl)
 
 @app.route('/logout')
 @login_required
