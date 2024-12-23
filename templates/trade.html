@@ -143,7 +143,11 @@
                     <p style="font-size: 20px"><strong>Total Balance:</strong> ${{ balance_usdt }}</p>
                     <p style="font-size: 20px"><strong>USDT:</strong> {{ amount_usdt | round(2) }}</p>
                     <p style="font-size: 20px"><strong>PEPE:</strong> {{ amount_pepe | round(2) }}</p>
-                    <p style="font-size: 20px"><strong>PNL:</strong> {{ (balance_usdt - 100) | round(2) }}</p>
+                    <p style="font-size: 20px"><strong>PNL:</strong> {{ (balance_usdt - 100) | round(2) }} %</p>
+                    <p style="font-size: 20px"><strong>WinRate:</strong> {{ winrate | round(2) }} %  </p>
+                    <p style="font-size: 20px"><strong>Win Trades:</strong> {{ win | round(2) }} </p>
+                    <p style="font-size: 20px"><strong>Lose Trades:</strong> {{ lose | round(2) }} </p>
+
                 </div>
             </div>
     <br>
@@ -201,7 +205,7 @@
                                             <td class="{{ 'crypt-up' if order['side'] == 'buy' else 'crypt-down' }} text-center">
                                                 {{ order['status'] }}
                                             </td>
-                                            <td>{{ order['price'] * order['quantity'] }} USD</td>
+                                            <td>{{ (order['price'] * order['quantity']) | round(2) }} USD</td>
                                         </tr>
                                         {% endfor %}
                                     </tbody>
@@ -245,7 +249,7 @@
                                             <td class="{{ 'crypt-up' if order['side'] == 'buy' else 'crypt-down' }} text-center">
                                                 {{ order['status'] }}
                                             </td>
-                                            <td>{{ order['price'] * order['quantity'] }} USD</td>
+                                            <td>{{ (order['price'] * order['quantity']) | round(2) }} USD</td>
                                         </tr>
                                         {% endfor %}
                                     </tbody>

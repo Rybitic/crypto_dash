@@ -53,14 +53,7 @@ def get_market_price(symbol):
 
 
 def check_and_fulfill_orders():
-    balance_pepe = user.find_one({"username": "test"})["balance"]["pepe"]
-    if balance_pepe == 0:
-        get_all_open_orders = orders.find({"status": "open"})
-        for order in get_all_open_orders:
-            orders.update_one({"_id": order["_id"]}, {"$set": {"status": "cancelled", "executed_at": datetime.now(timezone.utc).strftime("%d-%B-%Y %H-%M-%S")}})
-
-
-    # Get all open limit orders
+# Get all open limit orders
     open_orders = orders.find({"status": "open", "order_type": "limit", "pos": "long"})
 
     for order in open_orders:
@@ -257,6 +250,16 @@ def check_and_fulfill_orders():
                 user.update_one({"username": user_id}, {"$set": {"balance.pepe": balance_coin + qty}})
 
             print(f"Stop Limit Short Order {order['_id']} fulfilled at price {market_price} 4")
+
+
+    balance_pepe = user.find_one({"username": "test"})["balance"]["pepe"]
+    if balance_pepe == 0:
+        get_all_open_orders = orders.find({"status": "open"})
+        for order in get_all_open_orders:
+            orders.update_one({"_id": order["_id"]}, {
+                "$set": {"status": "cancelled", "executed_at": datetime.now(timezone.utc).strftime("%d-%B-%Y %H-%M-%S")}})
+
+
 @app.route('/', methods=['GET', 'POST'])
 def login():
     # Check if the user is already logged in
@@ -289,9 +292,21 @@ def index():
     balance_usdt = round(balance_usdt, 2)
     open_orders = list(orders.find({"status": "open"}))
     closed_orders = list(orders.find({"status": "executed"}))
+    number_of_closed_orders = len(closed_orders)
+    if not number_of_closed_orders % 2 == 0:
+        closed_orders = closed_orders[:-1]
+
+    win = 0
+    lose = 0
+    for i in closed_orders:
+        if i['order_type'] == 'limit':
+            win += 1
+        elif i['order_type'] == 'stop_limit':
+            lose += 1
+    winrate = win / (win + lose) * 100
 
     return render_template('trade.html', balance_usdt=balance_usdt, balance_pepe=balance_pepe, open_orders=open_orders, closed_orders=closed_orders,
-                           amount_usdt=amount_usdt, amount_pepe=balance_pepe)
+                           amount_usdt=amount_usdt, amount_pepe=balance_pepe, winrate=winrate, win=win, lose=lose)
 
 @app.route('/logout')
 @login_required
