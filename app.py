@@ -1,3 +1,4 @@
+
 from flask import Flask, render_template, request, redirect, session, url_for,jsonify
 from functools import wraps
 from datetime import timedelta, datetime, timezone
@@ -307,7 +308,10 @@ def index():
             win += 1
         elif i['order_type'] == 'stop_limit':
             lose += 1
-    winrate = win / (win + lose) * 100
+    try:
+        winrate = win / (win + lose) * 100
+    except ZeroDivisionError:
+        winrate = 0
     closed_orders = list(orders.find({"status": "executed"}))
 
     return render_template('trade.html', balance_usdt=balance_usdt, balance_pepe=balance_pepe, open_orders=open_orders, closed_orders=closed_orders,
